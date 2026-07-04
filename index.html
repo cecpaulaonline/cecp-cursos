@@ -4,111 +4,68 @@
     <meta charset="UTF-8">
     <title>CCP Cursos - Portal do Aluno</title>
     <style>
-        /* Paleta de Cores e Estilo Moderno */
-        :root { --primary: #004a99; --bg: #f4f4f9; --text: #333; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); }
-        
-        /* Navegação */
-        nav { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .logo { height: 50px; }
-        nav button { background: none; border: none; font-weight: bold; cursor: pointer; color: var(--primary); margin: 0 10px; }
-
-        /* Estrutura de Abas */
-        .page { display: none; padding: 40px; max-width: 900px; margin: auto; }
-        .active { display: block; }
-        
-        /* Sidebar (Menu Lateral Aluno) */
-        .sidebar { width: 220px; background: #fff; padding: 20px; height: 100vh; position: fixed; box-shadow: 2px 0 5px rgba(0,0,0,0.05); display: none; }
-        .content-area { margin-left: 260px; padding: 20px; }
-        
-        /* Elementos Visuais */
-        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .btn-main { background: var(--primary); color: white; padding: 12px 25px; border-radius: 8px; border: none; cursor: pointer; }
-        .video-box { width: 320px; height: 180px; background: #000; cursor: pointer; transition: 0.3s; margin: 10px 0; }
-        .video-box.expandido { width: 100%; height: 400px; }
+        :root { --primary: #004a99; }
+        body { font-family: sans-serif; margin: 0; background: #f4f4f9; }
+        nav { background: var(--primary); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .page { display: none; padding: 20px; } .active { display: block; }
+        .video-container { width: 320px; height: 180px; cursor: pointer; transition: 0.3s; background: #000; }
+        .video-container.expandido { width: 100%; height: 400px; }
+        .sidebar { width: 200px; background: #333; color: white; height: 100vh; position: fixed; display: none; padding: 20px; }
     </style>
 </head>
 <body>
 
 <nav>
-    <img src="SUA_LOGO.png" class="logo">
+    <img src="URL_DA_LOGO" style="width:100px;">
     <div>
         <button onclick="showPage('vitrine')">Cursos</button>
         <button onclick="showPage('acesso')">Área do Aluno</button>
-        <button onclick="showPage('sobre')">Sobre</button>
     </div>
 </nav>
 
 <div id="sidebar" class="sidebar">
-    <h4>Menu do Aluno</h4>
-    <p onclick="showPage('meus-dados')">Meus Dados</p>
-    <p onclick="showPage('progresso')">Meu Progresso</p>
-    <p onclick="showPage('trilha')">Trilha de Aulas</p>
-    <p onclick="showPage('certificados')">Certificados</p>
+    <button onclick="showPage('trilha')">Trilha</button><br>
+    <button onclick="showPage('meus-dados')">Meus Dados</button>
 </div>
 
-<div id="main-content" class="content-area">
-    
-    <div id="vitrine" class="page active">
-        <h1>Nossos Cursos</h1>
-        <div class="card">
-            <h3>Almoxarifado</h3>
-            <p>Preço: R$ 00,00</p>
-            <button class="btn-main" onclick="showPage('detalhe')">Ver mais</button>
-        </div>
-    </div>
-
-    <div id="detalhe" class="page">
-        <div class="card">
-            <h2>Almoxarifado</h2>
-            <p><b>Conteúdo:</b> Aulas, PDF, Exercícios, Certificado</p>
-            <p><b>Carga horária:</b> 40h</p>
-            <button class="btn-main" onclick="window.open('WA_LINK')">Me Inscrever</button>
-        </div>
-    </div>
-
-    <div id="acesso" class="page">
-        <div class="card">
-            <h2>Acesso do Aluno</h2>
-            <input type="text" placeholder="Chave de Acesso" id="chave"><br><br>
-            <input type="text" placeholder="CPF" id="cpf"><br><br>
-            <button class="btn-main" onclick="validarLogin()">Entrar</button>
-        </div>
+<main style="margin-left: 220px;">
+    <div id="acesso" class="page active">
+        <h2>Já sou aluno</h2>
+        <input id="login-chave" placeholder="Chave"><input id="login-cpf" placeholder="CPF">
+        <button onclick="enviarAcao('login')">Entrar</button>
+        
+        <h2>Primeiro Acesso</h2>
+        <input id="cad-nome" placeholder="Nome"><input id="cad-chave" placeholder="Chave"><input id="cad-cpf" placeholder="CPF">
+        <button onclick="enviarAcao('cadastro')">Cadastrar</button>
     </div>
 
     <div id="trilha" class="page">
-        <h1>NOME DO CURSO</h1>
-        <div class="card">
-            <h3>Aula 01</h3>
-            <div class="video-box" onclick="this.classList.toggle('expandido')"></div>
-            <p>Material em PDF: <a href="#">Clique aqui</a></p>
-            <p>Exercício 01: <span id="ex1">⚪</span> <button onclick="window.open('LINK_FORMS')">Responder</button></p>
-        </div>
-        <button class="btn-main" onclick="solicitarCertificado()">SOLICITAR CERTIFICADO</button>
+        <h1>Almoxarifado</h1>
+        <div class="video-container" onclick="this.classList.add('expandido')"></div>
+        <p>Exercício 01: <span id="status-ex1">⚪</span> <button onclick="window.open('LINK_FORMS')">Responder</button></p>
+        <button onclick="alert('Verificando status de pagamento...')">SOLICITAR CERTIFICADO</button>
     </div>
-
-    <div id="sobre" class="page">
-        <div class="card">
-            <h2>Sobre a CCP Cursos</h2>
-            <p>CNPJ: 00.000.000/0001-00</p>
-            <p>Redes Sociais: [Links]</p>
-        </div>
-    </div>
-</div>
+</main>
 
 <script>
+    const URL_SCRIPT = "COLE_AQUI_A_URL_DO_SEU_WEB_APP";
+
     function showPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(id).classList.add('active');
-        // Exibe sidebar apenas nas páginas do aluno
-        const sidebar = document.getElementById('sidebar');
-        sidebar.style.display = ['meus-dados', 'progresso', 'trilha', 'certificados'].includes(id) ? 'block' : 'none';
+        if(id === 'trilha') document.getElementById('sidebar').style.display = 'block';
     }
 
-    function validarLogin() {
-        // Aqui você chamará seu script de validação
-        alert("Autenticando...");
-        showPage('trilha');
+    function enviarAcao(acao) {
+        let params = {acao: acao};
+        if(acao === 'login') { params.chave = document.getElementById('login-chave').value; params.cpf = document.getElementById('login-cpf').value; }
+        
+        fetch(URL_SCRIPT, { method: 'POST', body: new URLSearchParams(params) })
+        .then(res => res.text())
+        .then(data => {
+            if(data.includes("SUCESSO")) showPage('trilha');
+            else alert("Erro: " + data);
+        });
     }
 </script>
 </body>
