@@ -1,65 +1,1140 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>CCP Cursos - Portal</title>
-    <style>
-        body { font-family: sans-serif; margin: 0; background: #f4f4f9; }
-        #app-container { max-width: 800px; margin: auto; padding: 20px; }
-        .hidden { display: none; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CECP Cursos — Centro de Educação e Capacitação Profissional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-900:#04213a;
+  --navy-800:#063a63;
+  --brand:#084A7D;
+  --brand-light:#2f6a9e;
+  --tint:#eaf2f8;
+  --paper:#fbfbf9;
+  --ink:#0d1b2a;
+  --muted:#5c7186;
+  --line:#d7e3ec;
+  --gold:#c08a35;
+  --gold-light:#e7c079;
+  --ok:#2f7d4f;
+  --ok-bg:#e5f3ea;
+  --danger:#b23b3b;
+  --danger-bg:#fbe9e9;
+  --radius:14px;
+  --shadow:0 12px 32px -16px rgba(4,33,58,.35);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  color:var(--ink);
+  background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600;margin:0;letter-spacing:-.01em;}
+p{margin:0;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+img{max-width:100%;display:block;}
+.hidden{display:none !important;}
+.container{max-width:1180px;margin:0 auto;padding:0 28px;}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600;}
+
+/* ---------- HEADER ---------- */
+header.site-header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(251,251,249,.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 28px;max-width:1180px;margin:0 auto;}
+.brand{display:flex;align-items:center;gap:12px;cursor:pointer;}
+.brand img{height:52px;width:auto;}
+.brand-name{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:700;color:var(--brand);line-height:1.1;}
+.brand-name span{display:block;font-family:'Inter',sans-serif;font-size:.68rem;font-weight:500;color:var(--muted);letter-spacing:.03em;}
+nav.main-nav{display:flex;align-items:center;gap:6px;}
+nav.main-nav a, nav.main-nav button.nav-link{
+  background:none;border:none;padding:9px 16px;border-radius:100px;
+  font-size:.9rem;font-weight:500;color:var(--navy-800);
+}
+nav.main-nav a:hover, nav.main-nav button.nav-link:hover{background:var(--tint);}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:11px 22px;border-radius:100px;border:none;font-weight:600;font-size:.9rem;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:0 8px 20px -8px rgba(8,74,125,.6);}
+.btn-primary:hover{background:var(--navy-800);}
+.btn-gold{background:var(--gold);color:#fff;box-shadow:0 8px 20px -8px rgba(192,138,53,.55);}
+.btn-gold:hover{background:#a9762a;}
+.btn-ghost{background:transparent;color:var(--brand);border:1.5px solid var(--brand);}
+.btn-ghost:hover{background:var(--tint);}
+.btn-block{width:100%;}
+.btn[disabled]{opacity:.45;cursor:not-allowed;box-shadow:none;}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;overflow:hidden;
+  background:radial-gradient(120% 140% at 15% -10%, var(--navy-800) 0%, var(--brand) 46%, var(--navy-900) 100%);
+  color:#fff;padding:88px 0 110px;
+}
+.hero .container{position:relative;z-index:2;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;}
+.hero h1{font-size:clamp(2.1rem,4vw,3.1rem);line-height:1.08;color:#fff;}
+.hero h1 em{font-style:normal;color:var(--gold-light);}
+.hero p.lead{margin-top:18px;font-size:1.08rem;color:#cfe0ee;max-width:46ch;line-height:1.55;}
+.hero-actions{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap;}
+.flame-badge{
+  display:inline-flex;align-items:center;gap:10px;margin-bottom:18px;
+  padding:7px 14px 7px 10px;border-radius:100px;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);
+}
+.flame-badge svg{width:16px;height:16px;}
+.flame-badge span{font-size:.78rem;font-weight:600;letter-spacing:.02em;color:#fce9c9;}
+.hero-visual{position:relative;height:340px;display:flex;align-items:center;justify-content:center;}
+.torch-wrap{position:relative;width:220px;height:280px;}
+.torch-flame{position:absolute;top:0;left:50%;transform:translateX(-50%);width:70px;animation:flicker 2.6s ease-in-out infinite;transform-origin:bottom center;}
+@keyframes flicker{
+  0%,100%{transform:translateX(-50%) scale(1) rotate(0deg);}
+  30%{transform:translateX(-50%) scale(1.05,.97) rotate(-2deg);}
+  60%{transform:translateX(-50%) scale(.96,1.04) rotate(2deg);}
+}
+.torch-glow{position:absolute;top:-30px;left:50%;transform:translateX(-50%);width:180px;height:180px;background:radial-gradient(circle, rgba(231,192,121,.55) 0%, rgba(231,192,121,0) 70%);filter:blur(4px);}
+.stat-row{display:flex;gap:28px;margin-top:38px;flex-wrap:wrap;}
+.stat-row div{border-left:2px solid rgba(255,255,255,.25);padding-left:12px;}
+.stat-num{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;color:#fff;}
+.stat-label{font-size:.72rem;color:#b7cddf;text-transform:uppercase;letter-spacing:.06em;}
+
+/* ---------- SECTIONS ---------- */
+section{padding:76px 0;}
+.section-head{max-width:640px;margin-bottom:44px;}
+.section-head h2{font-size:clamp(1.6rem,2.6vw,2.2rem);margin-top:8px;}
+.section-head p{color:var(--muted);margin-top:12px;font-size:1rem;line-height:1.6;}
+
+/* ---------- COURSE GRID ---------- */
+.course-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+.course-card{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+  display:flex;flex-direction:column;transition:transform .18s ease, box-shadow .18s ease;
+}
+.course-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+.course-photo{
+  height:150px;position:relative;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--brand) 0%, var(--navy-800) 100%);
+}
+.course-photo svg{width:56px;height:56px;color:#fff;opacity:.92;}
+.course-photo::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 20%, rgba(231,192,121,.35), transparent 55%);}
+.course-body{padding:20px 20px 22px;display:flex;flex-direction:column;gap:12px;flex:1;}
+.course-body h3{font-size:1.08rem;color:var(--navy-900);}
+.course-price{font-family:'IBM Plex Mono',monospace;font-size:1.15rem;font-weight:600;color:var(--brand);}
+.course-price small{display:block;font-family:'Inter',sans-serif;font-weight:500;font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+.course-body .btn{margin-top:auto;}
+
+/* ---------- ABOUT ---------- */
+.about{background:var(--tint);}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+.about-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px;}
+.about-card h4{font-size:.95rem;color:var(--navy-800);margin-bottom:6px;}
+.about-card p, .about-card a.link-row{font-size:.92rem;color:var(--muted);}
+.contact-list{display:flex;flex-direction:column;gap:16px;}
+.contact-row{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+.contact-row svg{width:20px;height:20px;flex:none;color:var(--brand);margin-top:2px;}
+.contact-row a:hover{color:var(--brand);}
+.social-row{display:flex;gap:10px;margin-top:14px;}
+.social-row a{width:38px;height:38px;border-radius:100px;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;}
+.social-row a:hover{background:var(--navy-800);}
+.social-row svg{width:17px;height:17px;}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--navy-900);color:#cfe0ee;padding:46px 0 26px;}
+footer .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+footer .foot-brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:600;color:#fff;}
+footer small{color:#7f9cb2;font-size:.78rem;}
+
+/* ---------- MODAL BASE ---------- */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(4,17,30,.62);z-index:200;
+  display:flex;align-items:center;justify-content:center;padding:24px;
+  opacity:0;pointer-events:none;transition:opacity .18s ease;
+}
+.modal-overlay.active{opacity:1;pointer-events:auto;}
+.modal-box{
+  background:#fff;border-radius:18px;max-width:720px;width:100%;max-height:88vh;overflow-y:auto;
+  padding:0;position:relative;transform:translateY(14px);transition:transform .18s ease;
+}
+.modal-overlay.active .modal-box{transform:translateY(0);}
+.modal-close{
+  position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:100px;border:none;
+  background:var(--tint);color:var(--navy-800);font-size:1.1rem;z-index:3;display:flex;align-items:center;justify-content:center;
+}
+.modal-close:hover{background:var(--line);}
+.modal-hero{height:150px;background:linear-gradient(135deg,var(--brand),var(--navy-800));display:flex;align-items:center;justify-content:center;}
+.modal-hero svg{width:60px;height:60px;color:#fff;}
+.modal-content{padding:28px 32px 32px;}
+.modal-content h2{font-size:1.5rem;color:var(--navy-900);}
+.price-tag{font-family:'IBM Plex Mono',monospace;font-size:1.35rem;color:var(--brand);font-weight:700;margin-top:6px;}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0;}
+.meta-item{background:var(--tint);border-radius:10px;padding:12px 14px;}
+.meta-item .lbl{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600;}
+.meta-item .val{font-size:.92rem;margin-top:3px;color:var(--navy-900);}
+.block-title{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);font-weight:700;margin:22px 0 10px;}
+.prog-list, .comp-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+.prog-list li, .comp-list li{display:flex;gap:10px;font-size:.9rem;color:var(--navy-900);align-items:flex-start;}
+.prog-list li::before{content:'';width:6px;height:6px;border-radius:100px;background:var(--brand);margin-top:7px;flex:none;}
+.comp-list li svg{width:16px;height:16px;color:var(--ok);flex:none;margin-top:2px;}
+
+/* ---------- LOGIN PAGE ---------- */
+.auth-wrap{padding:70px 0 100px;background:var(--tint);min-height:70vh;}
+.auth-card{max-width:480px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden;}
+.tab-row{display:flex;border-bottom:1px solid var(--line);}
+.tab-btn{flex:1;padding:16px;text-align:center;font-weight:600;font-size:.88rem;color:var(--muted);background:#fff;border:none;border-bottom:2px solid transparent;}
+.tab-btn.active{color:var(--brand);border-bottom-color:var(--brand);background:var(--tint);}
+.auth-pane{padding:28px 30px 30px;}
+.field{margin-bottom:15px;}
+.field label{display:block;font-size:.8rem;font-weight:600;color:var(--navy-800);margin-bottom:6px;}
+.field input, .field select{
+  width:100%;padding:11px 13px;border-radius:9px;border:1.4px solid var(--line);font-size:.92rem;font-family:inherit;background:#fff;
+}
+.field input:focus, .field select:focus{outline:none;border-color:var(--brand);}
+.hint{font-size:.76rem;color:var(--muted);margin-top:10px;line-height:1.5;}
+.demo-hint{background:var(--tint);border:1px dashed var(--brand-light);border-radius:10px;padding:10px 12px;font-size:.78rem;color:var(--navy-800);margin-top:14px;}
+.form-msg{margin-top:14px;padding:12px 14px;border-radius:10px;font-size:.85rem;display:none;}
+.form-msg.ok{display:block;background:var(--ok-bg);color:var(--ok);}
+.form-msg.err{display:block;background:var(--danger-bg);color:var(--danger);}
+
+/* ---------- DASHBOARD ---------- */
+.dash-wrap{min-height:80vh;background:var(--tint);}
+.dash-topbar{
+  background:#fff;border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:73px;z-index:40;
+}
+.dash-topbar .container{display:flex;align-items:center;gap:14px;justify-content:space-between;}
+.hamburger{
+  width:42px;height:42px;border-radius:10px;border:1.4px solid var(--line);background:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;flex:none;
+}
+.hamburger span{width:18px;height:2px;background:var(--navy-800);border-radius:2px;}
+.dash-topbar .who{font-size:.85rem;color:var(--navy-800);}
+.dash-topbar .who b{font-family:'Fraunces',serif;}
+.course-switch{display:flex;align-items:center;gap:10px;}
+.course-switch select{padding:9px 12px;border-radius:9px;border:1.4px solid var(--line);font-size:.86rem;font-weight:600;color:var(--brand);}
+
+.sidebar-overlay{position:fixed;inset:0;background:rgba(4,17,30,.45);z-index:90;opacity:0;pointer-events:none;transition:opacity .2s ease;}
+.sidebar-overlay.active{opacity:1;pointer-events:auto;}
+.sidebar{
+  position:fixed;top:0;left:0;bottom:0;width:290px;background:#fff;z-index:100;
+  transform:translateX(-100%);transition:transform .22s ease;box-shadow:14px 0 40px -18px rgba(0,0,0,.3);
+  display:flex;flex-direction:column;
+}
+.sidebar.active{transform:translateX(0);}
+.sidebar-head{padding:22px 22px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;}
+.sidebar-head img{height:38px;}
+.sidebar-close{margin-left:auto;width:32px;height:32px;border-radius:100px;border:none;background:var(--tint);}
+.sidebar-nav{padding:14px;display:flex;flex-direction:column;gap:4px;flex:1;}
+.sidebar-nav button{
+  text-align:left;padding:13px 14px;border-radius:10px;border:none;background:none;font-weight:600;
+  font-size:.92rem;color:var(--navy-800);display:flex;align-items:center;gap:12px;
+}
+.sidebar-nav button svg{width:19px;height:19px;color:var(--brand);flex:none;}
+.sidebar-nav button:hover{background:var(--tint);}
+.sidebar-nav button.active{background:var(--brand);color:#fff;}
+.sidebar-nav button.active svg{color:#fff;}
+.sidebar-foot{padding:16px;border-top:1px solid var(--line);}
+
+.dash-main{padding:36px 0 80px;}
+.panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px 28px;margin-bottom:24px;}
+.panel h3{font-size:1.15rem;color:var(--navy-900);margin-bottom:16px;}
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.data-item{background:var(--tint);border-radius:10px;padding:12px 14px;}
+.data-item .lbl{font-size:.68rem;text-transform:uppercase;color:var(--muted);font-weight:700;letter-spacing:.04em;}
+.data-item .val{margin-top:3px;font-size:.92rem;color:var(--navy-900);}
+.enroll-chip{display:inline-flex;align-items:center;gap:8px;background:var(--tint);border:1px solid var(--line);border-radius:100px;padding:7px 14px;font-size:.82rem;font-weight:600;color:var(--navy-800);margin:4px 6px 0 0;}
+.enroll-chip .dot{width:7px;height:7px;border-radius:100px;background:var(--ok);}
+
+table.grades{width:100%;border-collapse:collapse;font-size:.86rem;}
+table.grades th{text-align:left;padding:9px 10px;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line);}
+table.grades td{padding:10px;border-bottom:1px solid var(--line);color:var(--navy-900);}
+.badge{padding:3px 9px;border-radius:100px;font-size:.72rem;font-weight:700;}
+.badge.ok{background:var(--ok-bg);color:var(--ok);}
+.badge.no{background:var(--danger-bg);color:var(--danger);}
+.badge.wait{background:#f4ecd8;color:var(--gold);}
+
+.cert-option{border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px;}
+.cert-option h4{font-size:.98rem;margin-bottom:6px;color:var(--navy-900);}
+.cert-option p{font-size:.85rem;color:var(--muted);margin-bottom:14px;line-height:1.5;}
+.inline-form{display:flex;gap:10px;flex-wrap:wrap;}
+.inline-form input{flex:1;min-width:180px;padding:10px 12px;border-radius:9px;border:1.4px solid var(--line);font-size:.88rem;}
+.cert-result{margin-top:16px;}
+.cert-item{display:flex;justify-content:space-between;align-items:center;background:var(--tint);border-radius:10px;padding:12px 14px;margin-bottom:8px;}
+.cert-item .name{font-weight:600;font-size:.88rem;color:var(--navy-900);}
+.cert-item .code{font-size:.74rem;color:var(--muted);}
+
+/* ---------- TRILHA ---------- */
+.trilha-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:6px;flex-wrap:wrap;gap:10px;}
+.trilha-head .eyebrow{margin-bottom:4px;}
+.trilha-progress-bar{height:6px;background:var(--line);border-radius:100px;overflow:hidden;margin:16px 0 34px;}
+.trilha-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--brand));border-radius:100px;transition:width .3s ease;}
+
+.trilha-path{position:relative;padding-left:34px;}
+.trilha-path::before{
+  content:'';position:absolute;left:9px;top:6px;bottom:6px;width:3px;
+  background:linear-gradient(180deg,var(--gold) 0%,var(--brand-light) 40%, var(--line) 100%);border-radius:4px;
+}
+.aula-block{position:relative;margin-bottom:30px;}
+.aula-node{
+  position:absolute;left:-34px;top:2px;width:24px;height:24px;border-radius:100px;
+  background:#fff;border:3px solid var(--brand);display:flex;align-items:center;justify-content:center;z-index:2;
+}
+.aula-node.done{background:var(--brand);}
+.aula-node svg{width:12px;height:12px;color:#fff;}
+.aula-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;}
+.aula-card h4{font-size:1.02rem;color:var(--navy-900);margin-bottom:14px;}
+.aula-sub{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;margin:16px 0 8px;}
+.video-box{
+  width:220px;height:124px;border-radius:10px;background:linear-gradient(135deg,var(--navy-800),var(--brand));
+  display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:width .25s ease,height .25s ease;
+  overflow:hidden;
+}
+.video-box.expanded{width:100%;max-width:520px;height:290px;}
+.video-box .play-btn{width:46px;height:46px;border-radius:100px;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;}
+.video-box .play-btn svg{width:18px;height:18px;color:var(--brand);margin-left:2px;}
+.video-box .video-note{position:absolute;bottom:8px;left:10px;right:10px;color:#dbe9f4;font-size:.68rem;}
+.pdf-row{display:flex;align-items:center;gap:10px;background:var(--tint);border-radius:10px;padding:11px 14px;width:fit-content;}
+.pdf-row svg{width:18px;height:18px;color:var(--brand);}
+.pdf-row a{font-size:.86rem;font-weight:600;color:var(--brand);}
+.pdf-row a:hover{text-decoration:underline;}
+.ex-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+.ex-row:last-child{border-bottom:none;}
+.ex-name{font-size:.88rem;font-weight:600;color:var(--navy-900);min-width:110px;}
+.ex-status{width:22px;height:22px;border-radius:100px;display:flex;align-items:center;justify-content:center;flex:none;}
+.ex-status.ok{background:var(--ok-bg);color:var(--ok);}
+.ex-status.no{background:var(--danger-bg);color:var(--danger);}
+.ex-status.pending{background:var(--tint);color:var(--muted);}
+.ex-status svg{width:12px;height:12px;}
+.ex-grade{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--navy-800);min-width:70px;}
+.ex-link{font-size:.83rem;font-weight:600;color:var(--brand);margin-left:auto;}
+.ex-lock{font-size:.76rem;color:var(--danger);}
+.request-cert-wrap{text-align:center;margin-top:10px;padding-left:34px;}
+
+/* ---------- QUIZ MODAL ---------- */
+.quiz-q{margin-bottom:18px;}
+.quiz-q p.qtext{font-weight:600;font-size:.92rem;margin-bottom:10px;color:var(--navy-900);}
+.quiz-opt{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1.4px solid var(--line);border-radius:9px;margin-bottom:8px;cursor:pointer;font-size:.88rem;}
+.quiz-opt:hover{border-color:var(--brand-light);}
+.quiz-opt.selected{border-color:var(--brand);background:var(--tint);}
+.quiz-result{text-align:center;padding:10px 0;}
+.quiz-result .score{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:700;color:var(--brand);}
+
+@media(max-width:880px){
+  .hero .container{grid-template-columns:1fr;}
+  .hero-visual{display:none;}
+  .course-grid{grid-template-columns:repeat(2,1fr);}
+  .about-grid{grid-template-columns:1fr;}
+  .meta-grid{grid-template-columns:1fr;}
+  .data-grid{grid-template-columns:1fr;}
+  nav.main-nav a, nav.main-nav button.nav-link{display:none;}
+}
+@media(max-width:560px){
+  .course-grid{grid-template-columns:1fr;}
+}
+</style>
 </head>
 <body>
 
-<div id="app-container">
-    <nav>
-        <button onclick="loadContent('vitrine')">Vitrine</button>
-        <button onclick="loadContent('login')">Área do Aluno</button>
-    </nav>
-
-    <div id="content-display">
-        <h1>Bem-vindo à CCP Cursos</h1>
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand" onclick="Router.go('home')">
+      <img src="LOGO_AZUL.png" alt="CECP Cursos">
+      <div class="brand-name">CECP Cursos<span>Educação e Capacitação Profissional</span></div>
     </div>
+    <nav class="main-nav">
+      <a href="#cursos" onclick="Router.go('home','#cursos')">Cursos</a>
+      <a href="#sobre" onclick="Router.go('home','#sobre')">Sobre</a>
+      <button class="nav-link" onclick="Router.go('login')">Área do Aluno</button>
+      <button class="btn btn-primary" onclick="Router.go('login')">Entrar</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HOME ============ -->
+<main id="view-home">
+  <section class="hero">
+    <div class="container">
+      <div>
+        <div class="flame-badge">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 2c1 3-3 4-3 8a3 3 0 006 0c0-1-1-2-1-3 1.5 1 2.5 3 2.5 5a4.5 4.5 0 01-9 0c0-4.5 3.5-6 4.5-10z" fill="#e7c079"/></svg>
+          <span>Desde 2020 formando profissionais no RN</span>
+        </div>
+        <h1>Sua próxima <em>oportunidade</em> começa com o curso certo.</h1>
+        <p class="lead">Cursos profissionalizantes 100% online, com videoaulas, material de apoio e certificado — no seu ritmo, direto do celular ou computador.</p>
+        <div class="hero-actions">
+          <a class="btn btn-gold" href="#cursos">Ver cursos disponíveis</a>
+          <button class="btn btn-ghost" onclick="Router.go('login')">Já sou aluno</button>
+        </div>
+        <div class="stat-row">
+          <div><div class="stat-num">6</div><div class="stat-label">Cursos ativos</div></div>
+          <div><div class="stat-num">100%</div><div class="stat-label">Online</div></div>
+          <div><div class="stat-num">+5 anos</div><div class="stat-label">De experiência</div></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="torch-wrap">
+          <div class="torch-glow"></div>
+          <svg class="torch-flame" viewBox="0 0 100 130" fill="none">
+            <path d="M50 6c6 16-14 20-14 38a14 14 0 0028 0c0-6-4-10-4-14 7 5 11 14 11 22a21 21 0 01-42 0c0-22 16-28 21-46z" fill="#e7c079"/>
+          </svg>
+          <svg viewBox="0 0 100 200" style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60px;">
+            <path d="M40 40 L60 40 L54 190 L46 190 Z" fill="#0a3a63"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cursos">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Vitrine de cursos</span>
+        <h2>Escolha um curso e comece hoje mesmo</h2>
+        <p>Todos os cursos incluem videoaulas, material em PDF, exercícios avaliativos e certificado ao final.</p>
+      </div>
+      <div class="course-grid" id="course-grid"></div>
+    </div>
+  </section>
+
+  <section class="about" id="sobre">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Sobre a empresa</span>
+        <h2>Quem é a CECP Cursos</h2>
+        <p>O Centro de Educação e Capacitação Profissional atua desde 2020 oferecendo cursos profissionalizantes acessíveis, preparando pessoas para o mercado de trabalho.</p>
+      </div>
+      <div class="about-grid">
+        <div class="contact-list">
+          <div class="contact-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            <div><div class="lbl" style="font-size:.7rem;color:var(--muted);text-transform:uppercase;font-weight:700;">E-mail</div><a href="mailto:cecpcursos@gmail.com">cecpcursos@gmail.com</a></div>
+          </div>
+          <div class="contact-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 15.5c-1.2 0-2.4-.2-3.5-.6a1.6 1.6 0 00-1.6.4l-1.5 1.5a13.6 13.6 0 01-6.3-6.3l1.5-1.5c.4-.4.6-1 .4-1.6-.4-1.1-.6-2.3-.6-3.5 0-.9-.7-1.6-1.6-1.6H4.6C3.7 2.4 3 3.1 3 4c0 9.4 7.6 17 17 17 .9 0 1.6-.7 1.6-1.6v-2.3c0-.9-.7-1.6-1.6-1.6z"/></svg>
+            <div><div class="lbl" style="font-size:.7rem;color:var(--muted);text-transform:uppercase;font-weight:700;">WhatsApp</div><a href="https://wa.me/message/OQ4QTQIREYMMG1" target="_blank">(84) 9 8762-0081</a></div>
+          </div>
+          <div class="contact-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21V9h6v12M4 10l8-7 8 7v10a1 1 0 01-1 1h-4v-6H9v6H5a1 1 0 01-1-1z"/></svg>
+            <div><div class="lbl" style="font-size:.7rem;color:var(--muted);text-transform:uppercase;font-weight:700;">CNPJ</div><span>35.863.867/0001-55</span></div>
+          </div>
+          <div>
+            <div class="social-row">
+              <a href="https://www.instagram.com/cecpcursos?igsh=bnB4NGJtZWM3MTBu" target="_blank" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+              <a href="https://www.facebook.com/cecpcurso?mibextid=rS40aB7S9Ucbxw6v" target="_blank" title="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 9h3V5h-3a4 4 0 00-4 4v2H7v4h3v6h4v-6h3l1-4h-4v-2a1 1 0 011-1z"/></svg></a>
+              <a href="https://www.linkedin.com/company/cecpcursos/" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="8" y1="10" x2="8" y2="16"/><line x1="8" y1="7" x2="8" y2="7"/><path d="M12 16v-3.5a2 2 0 014 0V16"/></svg></a>
+            </div>
+          </div>
+        </div>
+        <div class="about-card">
+          <h4>Centro de Educação e Capacitação Profissional</h4>
+          <p>Desde 2020, capacitando pessoas para o mercado de trabalho com cursos objetivos, acessíveis e 100% online — do primeiro clique ao certificado.</p>
+          <br>
+          <h4>Missão</h4>
+          <p>Democratizar o acesso à capacitação profissional, com conteúdo direto ao ponto e suporte próximo ao aluno em cada etapa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ LOGIN ============ -->
+<main id="view-login" class="hidden">
+  <div class="auth-wrap">
+    <div class="container">
+      <div class="auth-card">
+        <div class="tab-row">
+          <button class="tab-btn active" id="tab-btn-existing" onclick="Auth.switchTab('existing')">Já sou aluno</button>
+          <button class="tab-btn" id="tab-btn-new" onclick="Auth.switchTab('new')">Primeiro acesso</button>
+        </div>
+
+        <div class="auth-pane" id="pane-existing">
+          <div class="field">
+            <label>Chave de acesso</label>
+            <input type="text" id="login-chave" placeholder="Ex: DEMO2026">
+          </div>
+          <div class="field">
+            <label>CPF</label>
+            <input type="text" id="login-cpf" placeholder="000.000.000-00">
+          </div>
+          <button class="btn btn-primary btn-block" onclick="Auth.loginExisting()">Entrar na área do aluno</button>
+          <div class="form-msg" id="login-msg"></div>
+          <div class="demo-hint">Para testar: chave <b>DEMO2026</b> · CPF <b>123.456.789-00</b></div>
+        </div>
+
+        <div class="auth-pane hidden" id="pane-new">
+          <div class="field"><label>Nome completo</label><input type="text" id="new-nome" placeholder="Seu nome completo"></div>
+          <div class="field"><label>CPF</label><input type="text" id="new-cpf" placeholder="000.000.000-00"></div>
+          <div class="field"><label>Data de nascimento</label><input type="date" id="new-nasc"></div>
+          <div class="field"><label>E-mail</label><input type="email" id="new-email" placeholder="seuemail@email.com"></div>
+          <div class="field"><label>WhatsApp</label><input type="text" id="new-whats" placeholder="(84) 9 9999-9999"></div>
+          <div class="field"><label>Curso de interesse</label>
+            <select id="new-curso"></select>
+          </div>
+          <button class="btn btn-primary btn-block" onclick="Auth.registerNew()">Criar meu cadastro</button>
+          <div class="form-msg" id="register-msg"></div>
+          <p class="hint">Seus dados serão registrados em nossa planilha de controle. Após o cadastro, você receberá pelo WhatsApp a chave de acesso e as instruções de pagamento.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ============ DASHBOARD ============ -->
+<main id="view-dashboard" class="hidden">
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="Dash.closeSidebar()"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+      <img src="LOGO_AZUL.png" alt="CECP">
+      <button class="sidebar-close" onclick="Dash.closeSidebar()">✕</button>
+    </div>
+    <div class="sidebar-nav">
+      <button data-panel="trilha" class="active" onclick="Dash.showPanel('trilha')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V6a2 2 0 012-2h5v16H6a2 2 0 01-2-2z"/><path d="M20 19V6a2 2 0 00-2-2h-5v16h5a2 2 0 002-2z"/></svg>
+        Trilha de conhecimento
+      </button>
+      <button data-panel="dados" onclick="Dash.showPanel('dados')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        Meus dados
+      </button>
+      <button data-panel="progresso" onclick="Dash.showPanel('progresso')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19h16M8 19V9M13 19V5M18 19v-7"/></svg>
+        Meu progresso
+      </button>
+      <button data-panel="certificados" onclick="Dash.showPanel('certificados')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 22l5-3 5 3-1.5-8"/></svg>
+        Certificados
+      </button>
+    </div>
+    <div class="sidebar-foot">
+      <button class="btn btn-ghost btn-block" onclick="Auth.logout()">Sair</button>
+    </div>
+  </aside>
+
+  <div class="dash-wrap">
+    <div class="dash-topbar">
+      <div class="container">
+        <button class="hamburger" onclick="Dash.openSidebar()"><span></span><span></span><span></span></button>
+        <div class="who">Olá, <b id="dash-who-name">—</b></div>
+        <div class="course-switch">
+          <select id="course-switch-select" onchange="Dash.selectCourse(this.value)"></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-main">
+      <div class="container">
+
+        <!-- TRILHA PANEL -->
+        <div class="panel" id="panel-trilha">
+          <div class="trilha-head">
+            <div>
+              <span class="eyebrow">Trilha de conhecimento</span>
+              <h2 id="trilha-course-name" style="font-size:1.5rem;">—</h2>
+            </div>
+          </div>
+          <div class="trilha-progress-bar"><div class="trilha-progress-fill" id="trilha-progress-fill" style="width:0%"></div></div>
+          <div class="trilha-path" id="trilha-path"></div>
+          <div class="request-cert-wrap">
+            <button class="btn btn-gold" id="btn-request-cert" onclick="Dash.showPanel('certificados')">Solicitar certificado</button>
+          </div>
+        </div>
+
+        <!-- DADOS PANEL -->
+        <div class="panel hidden" id="panel-dados">
+          <h3>Meus dados</h3>
+          <div class="data-grid" id="dados-grid"></div>
+          <h3 style="margin-top:26px;">Cursos em que estou matriculado(a)</h3>
+          <div id="dados-cursos"></div>
+        </div>
+
+        <!-- PROGRESSO PANEL -->
+        <div class="panel hidden" id="panel-progresso">
+          <h3>Meu progresso</h3>
+          <div id="progresso-content"></div>
+        </div>
+
+        <!-- CERTIFICADOS PANEL -->
+        <div class="panel hidden" id="panel-certificados">
+          <h3>Certificados</h3>
+          <div class="cert-option">
+            <h4>Solicitar meu certificado</h4>
+            <p>Informe sua chave de acesso ou CPF. Você precisa ter concluído todas as aulas (nota mínima 6 em pelo menos um exercício de cada aula) e o curso precisa constar como pago.</p>
+            <div class="inline-form">
+              <input type="text" id="cert-req-input" placeholder="Chave de acesso ou CPF">
+              <button class="btn btn-primary" onclick="Cert.solicitar()">Solicitar</button>
+            </div>
+            <div class="form-msg" id="cert-req-msg"></div>
+          </div>
+          <div class="cert-option">
+            <h4>Verificar certificado</h4>
+            <p>Já solicitou e emitiu seu certificado antes? Consulte pelo CPF todos os certificados vinculados a você.</p>
+            <div class="inline-form">
+              <input type="text" id="cert-check-input" placeholder="CPF">
+              <button class="btn btn-ghost" onclick="Cert.verificar()">Verificar</button>
+            </div>
+            <div class="cert-result" id="cert-check-result"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ============ COURSE DETAIL MODAL ============ -->
+<div class="modal-overlay" id="course-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="Modal.close('course-modal')">✕</button>
+    <div class="modal-hero" id="modal-hero-icon"></div>
+    <div class="modal-content" id="modal-course-content"></div>
+  </div>
 </div>
 
-<script>
-    function loadContent(page) {
-        const display = document.getElementById('content-display');
-        
-        // Se for página de login/acesso
-        if (page === 'login') {
-            display.innerHTML = `
-                <h2>Área do Aluno</h2>
-                <input id="chave" placeholder="Chave de Acesso">
-                <input id="cpf" placeholder="CPF">
-                <button onclick="fazerLogin()">Entrar</button>
-            `;
-        } 
-        // Se for a vitrine (pode ser um link externo ou um arquivo HTML)
-        else if (page === 'vitrine') {
-            display.innerHTML = '<h1>Vitrine de Cursos</h1><p>Lista de cursos aqui...</p>';
-        }
-    }
+<!-- ============ INSCRIÇÃO MODAL ============ -->
+<div class="modal-overlay" id="inscricao-modal">
+  <div class="modal-box" style="max-width:460px;">
+    <button class="modal-close" onclick="Modal.close('inscricao-modal')">✕</button>
+    <div class="modal-content">
+      <h2>Inscrição — <span id="insc-curso-nome"></span></h2>
+      <div class="field" style="margin-top:20px;"><label>Nome completo</label><input type="text" id="insc-nome"></div>
+      <div class="field"><label>CPF</label><input type="text" id="insc-cpf" placeholder="000.000.000-00"></div>
+      <div class="field"><label>E-mail</label><input type="email" id="insc-email"></div>
+      <div class="field"><label>WhatsApp</label><input type="text" id="insc-whats" placeholder="(84) 9 9999-9999"></div>
+      <button class="btn btn-gold btn-block" onclick="Enroll.submit()">Confirmar inscrição</button>
+      <div class="form-msg" id="insc-msg"></div>
+    </div>
+  </div>
+</div>
 
-    function fazerLogin() {
-        const chave = document.getElementById('chave').value;
-        const cpf = document.getElementById('cpf').value;
-        
-        // Conexão com seu Script (O único ponto de falha que precisamos garantir)
-        fetch("SUA_URL_DO_APP_SCRIPT", {
-            method: 'POST',
-            body: new URLSearchParams({acao: 'login', chave: chave, cpf: cpf})
-        })
-        .then(res => res.text())
-        .then(data => {
-            if(data.includes("SUCESSO")) {
-                // Se logou, carregamos o arquivo da "Trilha"
-                window.location.href = "trilha.html"; 
-            } else {
-                alert("Acesso negado.");
-            }
-        });
+<!-- ============ QUIZ MODAL ============ -->
+<div class="modal-overlay" id="quiz-modal">
+  <div class="modal-box" style="max-width:520px;">
+    <button class="modal-close" onclick="Modal.close('quiz-modal')">✕</button>
+    <div class="modal-content" id="quiz-content"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="foot-brand"><img src="LOGO_AZUL.png" style="height:32px;filter:brightness(0) invert(1);" alt=""> CECP Cursos</div>
+    <small>© 2020–2026 Centro de Educação e Capacitação Profissional · CNPJ 35.863.867/0001-55</small>
+  </div>
+</footer>
+
+<script>
+/* =========================================================================
+   DADOS MOCADOS (protótipo front-end — sem integração real com planilha /
+   Google Drive / video hosting / pagamento. Ver observações finais no chat.)
+   ========================================================================= */
+
+const ICONS = {
+  almoxarifado: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8l9-5 9 5-9 5-9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>`,
+  caixa: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M3 11h18"/><circle cx="12" cy="15" r="2"/></svg>`,
+  recepcionista: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 18v-2a4 4 0 014-4h8a4 4 0 014 4v2"/><circle cx="12" cy="7" r="3.2"/><path d="M2 20h20"/></svg>`,
+  farmacia: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v6M9 6h6"/><rect x="5" y="9" width="14" height="12" rx="2"/></svg>`,
+  rh: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.6"/><path d="M2 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5M14.5 20c.2-2.7 2-4.8 4.5-4.8 1.8 0 3.2.9 4 2.2"/></svg>`,
+  administrativo: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h9l4 4v14a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M8 12h8M8 16h5"/></svg>`
+};
+
+function makeAulas(nomes){
+  return nomes.map((titulo,i)=>({
+    id:'a'+(i+1),
+    titulo,
+    pdf:'https://drive.google.com/drive/folders/DEMO-MATERIAL-'+(i+1),
+    exercicios:[
+      {id:'e1', nome:'Exercício 01'},
+      {id:'e2', nome:'Exercício 02'},
+      {id:'e3', nome:'Exercício 03'}
+    ]
+  }));
+}
+
+const COURSES = [
+  {
+    id:'almoxarifado', nome:'Almoxarifado', icon:'almoxarifado',
+    precoNum:149.90, preco:'R$ 149,90',
+    pagamento:'Pix à vista ou cartão em até 3x sem juros',
+    cargaHoraria:'40 horas', horasAula:'10 horas',
+    conteudo:['Introdução à gestão de almoxarifado','Recebimento e conferência de mercadorias','Armazenagem e organização de estoque','Controle de estoque e inventário','Expedição e segurança no almoxarifado'],
+    composicao:['Videoaulas','Material de apoio em PDF','Exercícios avaliativos','Certificado digital','6 meses de acesso à plataforma'],
+    aulas: makeAulas(['Introdução à gestão de almoxarifado','Recebimento e conferência de mercadorias','Armazenagem e organização de estoque','Controle de estoque e inventário','Expedição e segurança no almoxarifado'])
+  },
+  {
+    id:'operador-caixa', nome:'Operador de Caixa', icon:'caixa',
+    precoNum:129.90, preco:'R$ 129,90',
+    pagamento:'Pix à vista ou cartão em até 3x sem juros',
+    cargaHoraria:'36 horas', horasAula:'9 horas',
+    conteudo:['Atendimento ao cliente no caixa','Operação de máquinas e sistemas de PDV','Conferência de valores e fechamento de caixa','Prevenção de fraudes e erros comuns','Ética e postura profissional'],
+    composicao:['Videoaulas','Material de apoio em PDF','Exercícios avaliativos','Certificado digital','6 meses de acesso à plataforma'],
+    aulas: makeAulas(['Atendimento ao cliente no caixa','Operação de máquinas e sistemas de PDV','Conferência de valores e fechamento de caixa','Prevenção de fraudes e erros comuns','Ética e postura profissional'])
+  },
+  {
+    id:'recepcionista', nome:'Recepcionista', icon:'recepcionista',
+    precoNum:139.90, preco:'R$ 139,90',
+    pagamento:'Pix à vista ou cartão em até 3x sem juros',
+    cargaHoraria:'36 horas', horasAula:'9 horas',
+    conteudo:['Postura e comunicação profissional','Atendimento presencial e telefônico','Organização da agenda e recepção de visitantes','Noções de etiqueta corporativa','Uso de sistemas de recepção e protocolos'],
+    composicao:['Videoaulas','Material de apoio em PDF','Exercícios avaliativos','Certificado digital','6 meses de acesso à plataforma'],
+    aulas: makeAulas(['Postura e comunicação profissional','Atendimento presencial e telefônico','Organização da agenda e recepção de visitantes','Noções de etiqueta corporativa','Uso de sistemas de recepção e protocolos'])
+  },
+  {
+    id:'farmacia', nome:'Atendente de Farmácia', icon:'farmacia',
+    precoNum:159.90, preco:'R$ 159,90',
+    pagamento:'Pix à vista ou cartão em até 4x sem juros',
+    cargaHoraria:'44 horas', horasAula:'11 horas',
+    conteudo:['Introdução à farmácia e legislação sanitária','Noções de farmacologia básica','Atendimento e orientação ao cliente','Organização e controle de estoque de medicamentos','Boas práticas e segurança no manuseio de produtos'],
+    composicao:['Videoaulas','Material de apoio em PDF','Exercícios avaliativos','Certificado digital','6 meses de acesso à plataforma'],
+    aulas: makeAulas(['Introdução à farmácia e legislação sanitária','Noções de farmacologia básica','Atendimento e orientação ao cliente','Organização e controle de estoque de medicamentos','Boas práticas e segurança no manuseio de produtos'])
+  },
+  {
+    id:'rh', nome:'Auxiliar de RH', icon:'rh',
+    precoNum:169.90, preco:'R$ 169,90',
+    pagamento:'Pix à vista ou cartão em até 4x sem juros',
+    cargaHoraria:'44 horas', horasAula:'11 horas',
+    conteudo:['Fundamentos de Recursos Humanos','Recrutamento e seleção de pessoal','Rotinas de admissão e demissão','Departamento pessoal e folha de pagamento','Clima organizacional e comunicação interna'],
+    composicao:['Videoaulas','Material de apoio em PDF','Exercícios avaliativos','Certificado digital','6 meses de acesso à plataforma'],
+    aulas: makeAulas(['Fundamentos de Recursos Humanos','Recrutamento e seleção de pessoal','Rotinas de admissão e demissão','Departamento pessoal e folha de pagamento','Clima organizacional e comunicação interna'])
+  },
+  {
+    id:'administrativo', nome:'Assistente Administrativo', icon:'administrativo',
+    precoNum:149.90, preco:'R$ 149,90',
+    pagamento:'Pix à vista ou cartão em até 3x sem juros',
+    cargaHoraria:'40 horas', horasAula:'10 horas',
+    conteudo:['Rotinas administrativas e organização de documentos','Redação empresarial e comunicação escrita','Noções de arquivo e protocolo','Atendimento ao público interno e externo','Ferramentas do pacote Office no dia a dia'],
+    composicao:['Videoaulas','Material de apoio em PDF','Exercícios avaliativos','Certificado digital','6 meses de acesso à plataforma'],
+    aulas: makeAulas(['Rotinas administrativas e organização de documentos','Redação empresarial e comunicação escrita','Noções de arquivo e protocolo','Atendimento ao público interno e externo','Ferramentas do pacote Office no dia a dia'])
+  }
+];
+
+function courseById(id){ return COURSES.find(c=>c.id===id); }
+
+// mock quiz bank (genérico, demonstrativo)
+const QUIZ_BANK = [
+  {q:'Qual alternativa representa uma boa prática profissional?', opts:['Chegar atrasado sem avisar','Manter organização e pontualidade','Ignorar o cliente','Não seguir procedimentos'], correct:1},
+  {q:'Diante de uma dúvida no procedimento, o correto é:', opts:['Improvisar sem consultar ninguém','Consultar o material de apoio ou supervisor','Ignorar a dúvida','Interromper o atendimento'], correct:1},
+  {q:'A organização e o registro correto das informações são:', opts:['Dispensáveis','Importantes para evitar erros','Responsabilidade só do supervisor','Only necessary once a month'], correct:1}
+];
+
+/* ---------------- BANCO DE ALUNOS (mock) ---------------- */
+function gradedExercise(nota, tentativas){ return {tentativas: tentativas || [nota], melhorNota: nota, bloqueadoAte: null}; }
+function emptyExercise(){ return {tentativas:[], melhorNota:null, bloqueadoAte:null}; }
+
+function buildProgress(pattern){
+  // pattern: array per aula of array of 3 notas-ou-null
+  const prog = {};
+  pattern.forEach((aulaNotas, i)=>{
+    prog['a'+(i+1)] = aulaNotas.map(n => n===null ? emptyExercise() : gradedExercise(n));
+  });
+  return prog;
+}
+
+const STUDENTS_DB = [
+  {
+    cpf:'12345678900', cpfFmt:'123.456.789-00', chave:'DEMO2026',
+    nome:'Maria Souza', email:'maria.souza@email.com', whatsapp:'(84) 9 9999-0001', nascimento:'1998-04-12',
+    dataCadastro:'10/01/2026',
+    matriculas:[
+      {
+        cursoId:'almoxarifado', pago:true, dataMatricula:'12/01/2026',
+        progresso: buildProgress([[8,null,null],[7,null,null],[null,null,null],[null,null,null],[null,null,null]]),
+        certificadoStatus:'em_andamento'
+      },
+      {
+        cursoId:'operador-caixa', pago:true, dataMatricula:'15/01/2026',
+        progresso: buildProgress([[9,null,null],[7,null,null],[8,null,null],[6,null,null],[10,null,null]]),
+        certificadoStatus:'apto'
+      },
+      {
+        cursoId:'recepcionista', pago:true, dataMatricula:'02/02/2025',
+        progresso: buildProgress([[8,null,null],[7,null,null],[9,null,null],[8,null,null],[9,null,null]]),
+        certificadoStatus:'emitido',
+        certificadoEmitido:{codigo:'CECP-2025-000123', dataEmissao:'20/03/2025'}
+      }
+    ]
+  }
+];
+
+/* ================= STATE ================= */
+const State = {
+  session:null,          // logged-in student object (reference to STUDENTS_DB item)
+  currentCourseId:null,  // course selected in dashboard
+  pendingExercise:null,  // {cursoId, aulaId, exId} being answered in quiz modal
+  quizAnswers:[]
+};
+
+/* ================= ROUTER ================= */
+const Router = {
+  go(view, hash){
+    document.getElementById('view-home').classList.toggle('hidden', view!=='home');
+    document.getElementById('view-login').classList.toggle('hidden', view!=='login');
+    document.getElementById('view-dashboard').classList.toggle('hidden', view!=='dashboard');
+    window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+    if(hash){ setTimeout(()=>{ const el=document.querySelector(hash); if(el) el.scrollIntoView({behavior:'smooth'}); }, 30); }
+  }
+};
+
+/* ================= MODAL ================= */
+const Modal = {
+  open(id){ document.getElementById(id).classList.add('active'); },
+  close(id){ document.getElementById(id).classList.remove('active'); }
+};
+
+/* ================= RENDER: VITRINE ================= */
+function renderCourseGrid(){
+  const grid = document.getElementById('course-grid');
+  grid.innerHTML = COURSES.map(c => `
+    <div class="course-card">
+      <div class="course-photo">${ICONS[c.icon]}</div>
+      <div class="course-body">
+        <h3>${c.nome}</h3>
+        <div class="course-price">${c.preco}<small>Pagamento facilitado</small></div>
+        <button class="btn btn-ghost" onclick="CourseDetail.open('${c.id}')">Ver mais</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+const CourseDetail = {
+  open(id){
+    const c = courseById(id);
+    document.getElementById('modal-hero-icon').innerHTML = ICONS[c.icon];
+    document.getElementById('modal-course-content').innerHTML = `
+      <h2>${c.nome}</h2>
+      <div class="price-tag">${c.preco}</div>
+      <div class="meta-grid">
+        <div class="meta-item"><div class="lbl">Forma de pagamento</div><div class="val">${c.pagamento}</div></div>
+        <div class="meta-item"><div class="lbl">Carga horária total</div><div class="val">${c.cargaHoraria}</div></div>
+        <div class="meta-item"><div class="lbl">Horas-aula</div><div class="val">${c.horasAula}</div></div>
+        <div class="meta-item"><div class="lbl">Aulas</div><div class="val">${c.aulas.length} aulas</div></div>
+      </div>
+      <div class="block-title">Conteúdo programático</div>
+      <ul class="prog-list">${c.conteudo.map(i=>`<li>${i}</li>`).join('')}</ul>
+      <div class="block-title">Composição do curso</div>
+      <ul class="comp-list">${c.composicao.map(i=>`<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg>${i}</li>`).join('')}</ul>
+      <button class="btn btn-primary btn-block" style="margin-top:22px;" onclick="Enroll.open('${c.id}')">Me inscrever</button>
+    `;
+    Modal.open('course-modal');
+  }
+};
+
+const Enroll = {
+  curso:null,
+  open(id){
+    this.curso = id;
+    document.getElementById('insc-curso-nome').textContent = courseById(id).nome;
+    ['insc-nome','insc-cpf','insc-email','insc-whats'].forEach(i=>document.getElementById(i).value='');
+    document.getElementById('insc-msg').className='form-msg';
+    document.getElementById('insc-msg').textContent='';
+    Modal.close('course-modal');
+    Modal.open('inscricao-modal');
+  },
+  submit(){
+    const nome=document.getElementById('insc-nome').value.trim();
+    const cpf=document.getElementById('insc-cpf').value.trim();
+    const email=document.getElementById('insc-email').value.trim();
+    const whats=document.getElementById('insc-whats').value.trim();
+    const msg=document.getElementById('insc-msg');
+    if(!nome||!cpf||!email||!whats){
+      msg.className='form-msg err'; msg.textContent='Preencha todos os campos para concluir a inscrição.'; return;
     }
+    msg.className='form-msg ok';
+    msg.innerHTML = 'Inscrição registrada com sucesso! Em breve nossa equipe entrará em contato pelo WhatsApp para confirmar o pagamento e liberar seu acesso. <a href="https://wa.me/message/OQ4QTQIREYMMG1" target="_blank" style="text-decoration:underline;">Falar agora pelo WhatsApp</a>.';
+  }
+};
+
+/* ================= AUTH ================= */
+function onlyDigits(s){ return (s||'').replace(/\D/g,''); }
+
+const Auth = {
+  switchTab(which){
+    document.getElementById('tab-btn-existing').classList.toggle('active', which==='existing');
+    document.getElementById('tab-btn-new').classList.toggle('active', which==='new');
+    document.getElementById('pane-existing').classList.toggle('hidden', which!=='existing');
+    document.getElementById('pane-new').classList.toggle('hidden', which!=='new');
+  },
+  loginExisting(){
+    const chave = document.getElementById('login-chave').value.trim();
+    const cpf = onlyDigits(document.getElementById('login-cpf').value);
+    const msg = document.getElementById('login-msg');
+    const student = STUDENTS_DB.find(s => s.chave===chave && s.cpf===cpf);
+    if(!student){
+      msg.className='form-msg err';
+      msg.textContent='Chave de acesso ou CPF não encontrados. Confira os dados e tente novamente.';
+      return;
+    }
+    msg.className='form-msg ok'; msg.textContent='Login realizado! Redirecionando...';
+    setTimeout(()=>{ State.session = student; Dash.enter(); }, 400);
+  },
+  registerNew(){
+    const nome=document.getElementById('new-nome').value.trim();
+    const cpf=document.getElementById('new-cpf').value.trim();
+    const email=document.getElementById('new-email').value.trim();
+    const msg=document.getElementById('register-msg');
+    if(!nome||!cpf||!email){
+      msg.className='form-msg err'; msg.textContent='Preencha ao menos nome, CPF e e-mail.'; return;
+    }
+    msg.className='form-msg ok';
+    msg.innerHTML='Cadastro enviado para nossa planilha de controle! Você receberá sua chave de acesso e as instruções de pagamento pelo WhatsApp em breve.';
+  },
+  logout(){
+    State.session=null; State.currentCourseId=null;
+    Dash.closeSidebar();
+    Router.go('home');
+  }
+};
+
+// popula select de "curso de interesse"
+document.getElementById('new-curso').innerHTML = COURSES.map(c=>`<option value="${c.id}">${c.nome}</option>`).join('');
+
+/* ================= DASHBOARD ================= */
+const Dash = {
+  enter(){
+    const s = State.session;
+    document.getElementById('dash-who-name').textContent = s.nome.split(' ')[0];
+    const sel = document.getElementById('course-switch-select');
+    sel.innerHTML = s.matriculas.map(m=>`<option value="${m.cursoId}">${courseById(m.cursoId).nome}</option>`).join('');
+    State.currentCourseId = s.matriculas[0].cursoId;
+    sel.value = State.currentCourseId;
+    this.showPanel('trilha');
+    this.renderTrilha();
+    this.renderDados();
+    this.renderProgresso();
+    Router.go('dashboard');
+  },
+  openSidebar(){ document.getElementById('sidebar').classList.add('active'); document.getElementById('sidebar-overlay').classList.add('active'); },
+  closeSidebar(){ document.getElementById('sidebar').classList.remove('active'); document.getElementById('sidebar-overlay').classList.remove('active'); },
+  showPanel(name){
+    ['trilha','dados','progresso','certificados'].forEach(p=>{
+      document.getElementById('panel-'+p).classList.toggle('hidden', p!==name);
+    });
+    document.querySelectorAll('.sidebar-nav button').forEach(b=>b.classList.toggle('active', b.dataset.panel===name));
+    this.closeSidebar();
+  },
+  selectCourse(id){
+    State.currentCourseId = id;
+    this.renderTrilha();
+  },
+  matricula(cursoId){
+    return State.session.matriculas.find(m=>m.cursoId===(cursoId||State.currentCourseId));
+  },
+  renderTrilha(){
+    const s = State.session;
+    const m = this.matricula();
+    const curso = courseById(m.cursoId);
+    document.getElementById('trilha-course-name').textContent = curso.nome;
+
+    let totalAulas = curso.aulas.length, concluidas = 0;
+    const pathHtml = curso.aulas.map(aula => {
+      const exs = m.progresso[aula.id];
+      const done = exs.some(e => e.melhorNota!==null && e.melhorNota>=6);
+      if(done) concluidas++;
+      const exRows = aula.exercicios.map((ex,i)=>{
+        const st = exs[i];
+        let statusHtml, gradeHtml, actionHtml;
+        const tentativasUsadas = st.tentativas.length;
+        const passou = st.melhorNota!==null && st.melhorNota>=6;
+        if(st.melhorNota===null){
+          statusHtml = `<div class="ex-status pending">–</div>`;
+        } else if(passou){
+          statusHtml = `<div class="ex-status ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>`;
+        } else {
+          statusHtml = `<div class="ex-status no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 6l12 12M18 6L6 18"/></svg></div>`;
+        }
+        gradeHtml = `<span class="ex-grade">${st.melhorNota!==null ? 'Nota: '+st.melhorNota : 'Sem nota'}</span>`;
+        if(passou){
+          actionHtml = `<span class="ex-link" style="color:var(--ok);">Concluído</span>`;
+        } else if(tentativasUsadas>=3){
+          actionHtml = `<span class="ex-lock">3 tentativas usadas — novo envio em 15 dias</span>`;
+        } else {
+          actionHtml = `<a class="ex-link" href="javascript:void(0)" onclick="Quiz.open('${m.cursoId}','${aula.id}','${ex.id}')">${tentativasUsadas===0?'Responder':'Tentar novamente'} (tentativa ${tentativasUsadas+1}/3)</a>`;
+        }
+        return `<div class="ex-row">${statusHtml}<span class="ex-name">${ex.nome}</span>${gradeHtml}${actionHtml}</div>`;
+      }).join('');
+
+      return `
+        <div class="aula-block">
+          <div class="aula-node ${done?'done':''}">${done?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M5 13l4 4L19 7"/></svg>':''}</div>
+          <div class="aula-card">
+            <h4>${aula.titulo}</h4>
+            <div class="aula-sub">Vídeo aula</div>
+            <div class="video-box" id="video-${aula.id}" onclick="Dash.toggleVideo('${aula.id}')">
+              <div class="play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+              <div class="video-note">Player de vídeo — hospedado na plataforma CECP</div>
+            </div>
+            <div class="aula-sub">Material de apoio</div>
+            <div class="pdf-row">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2h9l5 5v15H6z"/><path d="M9 13h6M9 17h6"/></svg>
+              <a href="${aula.pdf}" target="_blank">Material em PDF (Google Drive)</a>
+            </div>
+            <div class="aula-sub">Exercícios avaliativos</div>
+            ${exRows}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('trilha-path').innerHTML = pathHtml;
+    document.getElementById('trilha-progress-fill').style.width = Math.round((concluidas/totalAulas)*100)+'%';
+
+    const podeSolicitar = concluidas===totalAulas && m.pago && m.certificadoStatus!=='emitido';
+    const btnCert = document.getElementById('btn-request-cert');
+    if(m.certificadoStatus==='emitido'){
+      btnCert.textContent='Certificado já emitido — ver em Certificados';
+      btnCert.disabled=false;
+    } else if(podeSolicitar){
+      btnCert.textContent='Solicitar certificado';
+      btnCert.disabled=false;
+    } else {
+      btnCert.textContent='Conclua todas as aulas para solicitar o certificado';
+      btnCert.disabled=true;
+    }
+  },
+  toggleVideo(aulaId){
+    document.getElementById('video-'+aulaId).classList.toggle('expanded');
+  },
+  renderDados(){
+    const s = State.session;
+    document.getElementById('dados-grid').innerHTML = `
+      <div class="data-item"><div class="lbl">Nome</div><div class="val">${s.nome}</div></div>
+      <div class="data-item"><div class="lbl">CPF</div><div class="val">${s.cpfFmt}</div></div>
+      <div class="data-item"><div class="lbl">E-mail</div><div class="val">${s.email}</div></div>
+      <div class="data-item"><div class="lbl">WhatsApp</div><div class="val">${s.whatsapp}</div></div>
+      <div class="data-item"><div class="lbl">Data de cadastro</div><div class="val">${s.dataCadastro}</div></div>
+      <div class="data-item"><div class="lbl">Chave de acesso</div><div class="val">${s.chave}</div></div>
+    `;
+    document.getElementById('dados-cursos').innerHTML = s.matriculas.map(m=>{
+      const c = courseById(m.cursoId);
+      return `<span class="enroll-chip"><span class="dot"></span>${c.nome} — matrícula em ${m.dataMatricula}</span>`;
+    }).join('');
+  },
+  renderProgresso(){
+    const s = State.session;
+    let rows = '';
+    s.matriculas.forEach(m=>{
+      const c = courseById(m.cursoId);
+      c.aulas.forEach(aula=>{
+        const exs = m.progresso[aula.id];
+        aula.exercicios.forEach((ex,i)=>{
+          const st = exs[i];
+          const nota = st.melhorNota;
+          let badge = '<span class="badge wait">Pendente</span>';
+          if(nota!==null){ badge = nota>=6 ? '<span class="badge ok">Aprovado</span>' : '<span class="badge no">Abaixo de 6</span>'; }
+          rows += `<tr><td>${c.nome}</td><td>${aula.titulo}</td><td>${ex.nome}</td><td>${nota!==null?nota:'—'}</td><td>${badge}</td></tr>`;
+        });
+      });
+    });
+    document.getElementById('progresso-content').innerHTML = `
+      <table class="grades">
+        <thead><tr><th>Curso</th><th>Aula</th><th>Exercício</th><th>Nota</th><th>Status</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+  }
+};
+
+/* ================= QUIZ ================= */
+const Quiz = {
+  ctx:null, answers:[],
+  open(cursoId, aulaId, exId){
+    this.ctx = {cursoId, aulaId, exId};
+    this.answers = [null,null,null];
+    this.renderQuestions();
+    Modal.open('quiz-modal');
+  },
+  renderQuestions(){
+    const html = QUIZ_BANK.map((q,qi)=>`
+      <div class="quiz-q">
+        <p class="qtext">${qi+1}. ${q.q}</p>
+        ${q.opts.map((o,oi)=>`<div class="quiz-opt" data-q="${qi}" data-o="${oi}" onclick="Quiz.select(${qi},${oi})">${o}</div>`).join('')}
+      </div>
+    `).join('');
+    document.getElementById('quiz-content').innerHTML = `
+      <h2>Exercício avaliativo</h2>
+      <p class="hint" style="margin-bottom:18px;">Responda as 3 questões abaixo. É necessário nota mínima 6 para aprovação.</p>
+      ${html}
+      <button class="btn btn-primary btn-block" onclick="Quiz.submit()">Enviar respostas</button>
+    `;
+  },
+  select(qi, oi){
+    this.answers[qi]=oi;
+    document.querySelectorAll(`.quiz-opt[data-q="${qi}"]`).forEach(el=>{
+      el.classList.toggle('selected', Number(el.dataset.o)===oi);
+    });
+  },
+  submit(){
+    if(this.answers.includes(null)){ alert('Responda todas as questões antes de enviar.'); return; }
+    let acertos=0;
+    QUIZ_BANK.forEach((q,qi)=>{ if(this.answers[qi]===q.correct) acertos++; });
+    const nota = Math.round((acertos/QUIZ_BANK.length)*10);
+    const m = Dash.matricula(this.ctx.cursoId);
+    const aulaIdx = courseById(this.ctx.cursoId).aulas.findIndex(a=>a.id===this.ctx.aulaId);
+    const exIdx = courseById(this.ctx.cursoId).aulas[aulaIdx].exercicios.findIndex(e=>e.id===this.ctx.exId);
+    const st = m.progresso[this.ctx.aulaId][exIdx];
+    st.tentativas.push(nota);
+    if(st.melhorNota===null || nota>st.melhorNota) st.melhorNota=nota;
+    const passou = nota>=6;
+    document.getElementById('quiz-content').innerHTML = `
+      <div class="quiz-result">
+        <div class="score">${nota}</div>
+        <p style="margin-top:8px;font-weight:600;color:${passou?'var(--ok)':'var(--danger)'};">${passou?'Parabéns, você foi aprovado!':'Nota abaixo de 6.'}</p>
+        <p class="hint" style="margin-top:8px;">${passou ? 'Este exercício já está registrado como concluído.' : (st.tentativas.length>=3 ? 'Você usou as 3 tentativas disponíveis. Uma nova tentativa poderá ser feita em 15 dias.' : 'Você ainda tem tentativa(s) disponível(is) para esta aula.')}</p>
+        <button class="btn btn-primary" style="margin-top:16px;" onclick="Modal.close('quiz-modal'); Dash.renderTrilha(); Dash.renderProgresso();">Fechar</button>
+      </div>
+    `;
+  }
+};
+
+/* ================= CERTIFICADOS ================= */
+const Cert = {
+  solicitar(){
+    const input = onlyDigits(document.getElementById('cert-req-input').value) || document.getElementById('cert-req-input').value.trim();
+    const msg = document.getElementById('cert-req-msg');
+    const student = STUDENTS_DB.find(s => s.chave===document.getElementById('cert-req-input').value.trim() || s.cpf===onlyDigits(document.getElementById('cert-req-input').value));
+    if(!student){ msg.className='form-msg err'; msg.textContent='Não encontramos chave de acesso ou CPF correspondente.'; return; }
+    const cursoAtual = State.currentCourseId;
+    const m = student.matriculas.find(x=>x.cursoId===cursoAtual) || student.matriculas[0];
+    const curso = courseById(m.cursoId);
+    const concluidas = curso.aulas.every(aula => m.progresso[aula.id].some(e=>e.melhorNota!==null && e.melhorNota>=6));
+    if(m.certificadoStatus==='emitido'){
+      msg.className='form-msg ok'; msg.textContent=`Certificado do curso "${curso.nome}" já foi emitido anteriormente. Use "Verificar certificado" para consultá-lo.`; return;
+    }
+    if(concluidas && m.pago){
+      m.certificadoStatus='emitido';
+      m.certificadoEmitido={codigo:'CECP-'+new Date().getFullYear()+'-'+Math.floor(100000+Math.random()*899999), dataEmissao:new Date().toLocaleDateString('pt-BR')};
+      msg.className='form-msg ok'; msg.textContent=`Certificado emitido com sucesso! Código: ${m.certificadoEmitido.codigo}`;
+      Dash.renderTrilha();
+    } else {
+      msg.className='form-msg err'; msg.textContent='Ainda não é possível emitir: conclua todas as aulas com nota mínima 6 e confirme se o curso está marcado como pago.';
+    }
+  },
+  verificar(){
+    const cpf = onlyDigits(document.getElementById('cert-check-input').value);
+    const result = document.getElementById('cert-check-result');
+    const student = STUDENTS_DB.find(s=>s.cpf===cpf);
+    if(!student){ result.innerHTML = '<div class="form-msg err" style="display:block;">CPF não encontrado.</div>'; return; }
+    const emitidos = student.matriculas.filter(m=>m.certificadoStatus==='emitido');
+    if(emitidos.length===0){ result.innerHTML = '<div class="form-msg err" style="display:block;">Nenhum certificado emitido encontrado para este CPF.</div>'; return; }
+    result.innerHTML = emitidos.map(m=>{
+      const c = courseById(m.cursoId);
+      return `<div class="cert-item"><div><div class="name">${c.nome}</div><div class="code">Código: ${m.certificadoEmitido.codigo} · Emitido em ${m.certificadoEmitido.dataEmissao}</div></div><span class="badge ok">Emitido</span></div>`;
+    }).join('');
+  }
+};
+
+/* ================= INIT ================= */
+renderCourseGrid();
+Router.go('home');
 </script>
 </body>
 </html>
