@@ -97,8 +97,9 @@
                 if (data === "SUCESSO_CADASTRO") {
                     alert("Cadastro realizado com sucesso! Agora mude a opção para 'Já sou aluno' para acessar.");
                     location.reload();
-                } else if (data === "SUCESSO_LOGIN") {
+               } else if (data === "SUCESSO_LOGIN") {
                     alert("Login autorizado! Bem-vindo ao curso.");
+                    window.location.href = "conteudo.html";
                 } else if (data === "ERRO_EXPIRADO") {
                     alert("Atenção: Seu prazo de acesso de 90 dias expirou.");
                 } else if (data === "ERRO_LOGIN") {
