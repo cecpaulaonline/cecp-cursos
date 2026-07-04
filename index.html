@@ -2,74 +2,113 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>CECP Cursos - Portal do Aluno</title>
+    <title>CCP Cursos - Portal do Aluno</title>
     <style>
-        :root { --cor-principal: #004a99; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f4f4f9; }
+        /* Paleta de Cores e Estilo Moderno */
+        :root { --primary: #004a99; --bg: #f4f4f9; --text: #333; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); }
         
-        /* Layout */
-        nav { background: var(--cor-principal); color: white; padding: 15px; display: flex; justify-content: space-between; }
-        .sidebar { width: 220px; height: 100vh; position: fixed; left: -220px; top: 60px; background: #333; color: white; padding: 20px; transition: 0.3s; }
-        .sidebar.active { left: 0; }
-        .main-content { padding: 40px; margin-left: 0; transition: 0.3s; }
+        /* Navegação */
+        nav { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .logo { height: 50px; }
+        nav button { background: none; border: none; font-weight: bold; cursor: pointer; color: var(--primary); margin: 0 10px; }
+
+        /* Estrutura de Abas */
+        .page { display: none; padding: 40px; max-width: 900px; margin: auto; }
+        .active { display: block; }
         
-        /* Componentes */
-        .page { display: none; }
-        .page.active { display: block; }
-        .btn { padding: 10px 20px; cursor: pointer; background: var(--cor-principal); color: white; border: none; border-radius: 5px; }
+        /* Sidebar (Menu Lateral Aluno) */
+        .sidebar { width: 220px; background: #fff; padding: 20px; height: 100vh; position: fixed; box-shadow: 2px 0 5px rgba(0,0,0,0.05); display: none; }
+        .content-area { margin-left: 260px; padding: 20px; }
         
-        /* Trilha */
-        .aula-card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .video-box { width: 100%; max-width: 560px; height: 315px; background: black; margin-top: 10px; }
+        /* Elementos Visuais */
+        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .btn-main { background: var(--primary); color: white; padding: 12px 25px; border-radius: 8px; border: none; cursor: pointer; }
+        .video-box { width: 320px; height: 180px; background: #000; cursor: pointer; transition: 0.3s; margin: 10px 0; }
+        .video-box.expandido { width: 100%; height: 400px; }
     </style>
 </head>
 <body>
 
 <nav>
-    <button onclick="toggleSidebar()">☰ Menu</button>
+    <img src="SUA_LOGO.png" class="logo">
     <div>
         <button onclick="showPage('vitrine')">Cursos</button>
         <button onclick="showPage('acesso')">Área do Aluno</button>
+        <button onclick="showPage('sobre')">Sobre</button>
     </div>
 </nav>
 
-<!-- Sidebar Lateral (Área do Aluno) -->
 <div id="sidebar" class="sidebar">
-    <button onclick="showPage('meus-dados')">Meus Dados</button>
-    <button onclick="showPage('trilha')">Trilha de Conhecimento</button>
-    <button onclick="showPage('certificados')">Certificados</button>
+    <h4>Menu do Aluno</h4>
+    <p onclick="showPage('meus-dados')">Meus Dados</p>
+    <p onclick="showPage('progresso')">Meu Progresso</p>
+    <p onclick="showPage('trilha')">Trilha de Aulas</p>
+    <p onclick="showPage('certificados')">Certificados</p>
 </div>
 
-<main id="content" class="main-content">
-    <!-- Exemplo da Trilha (Conteúdo após login) -->
-    <div id="trilha" class="page">
-        <h1>Gestão de Almoxarifado</h1>
-        <div class="aula-card">
-            <h3>Aula 01 - Introdução</h3>
-            <div class="video-box">
-                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/Mu-3vb_mYvE" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <p>Material: <a href="LINK_DRIVE" target="_blank">Baixar PDF</a></p>
-            <ul>
-                <li>Exercício 01: Nota 8 ✅ <button>Acessar</button></li>
-                <li>Exercício 02: Nota 4 ❎ <button>Acessar</button></li>
-            </ul>
+<div id="main-content" class="content-area">
+    
+    <div id="vitrine" class="page active">
+        <h1>Nossos Cursos</h1>
+        <div class="card">
+            <h3>Almoxarifado</h3>
+            <p>Preço: R$ 00,00</p>
+            <button class="btn-main" onclick="showPage('detalhe')">Ver mais</button>
         </div>
-        <button class="btn" onclick="solicitarCertificado()">SOLICITAR CERTIFICADO</button>
     </div>
-</main>
+
+    <div id="detalhe" class="page">
+        <div class="card">
+            <h2>Almoxarifado</h2>
+            <p><b>Conteúdo:</b> Aulas, PDF, Exercícios, Certificado</p>
+            <p><b>Carga horária:</b> 40h</p>
+            <button class="btn-main" onclick="window.open('WA_LINK')">Me Inscrever</button>
+        </div>
+    </div>
+
+    <div id="acesso" class="page">
+        <div class="card">
+            <h2>Acesso do Aluno</h2>
+            <input type="text" placeholder="Chave de Acesso" id="chave"><br><br>
+            <input type="text" placeholder="CPF" id="cpf"><br><br>
+            <button class="btn-main" onclick="validarLogin()">Entrar</button>
+        </div>
+    </div>
+
+    <div id="trilha" class="page">
+        <h1>NOME DO CURSO</h1>
+        <div class="card">
+            <h3>Aula 01</h3>
+            <div class="video-box" onclick="this.classList.toggle('expandido')"></div>
+            <p>Material em PDF: <a href="#">Clique aqui</a></p>
+            <p>Exercício 01: <span id="ex1">⚪</span> <button onclick="window.open('LINK_FORMS')">Responder</button></p>
+        </div>
+        <button class="btn-main" onclick="solicitarCertificado()">SOLICITAR CERTIFICADO</button>
+    </div>
+
+    <div id="sobre" class="page">
+        <div class="card">
+            <h2>Sobre a CCP Cursos</h2>
+            <p>CNPJ: 00.000.000/0001-00</p>
+            <p>Redes Sociais: [Links]</p>
+        </div>
+    </div>
+</div>
 
 <script>
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
-    
     function showPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(id).classList.add('active');
+        // Exibe sidebar apenas nas páginas do aluno
+        const sidebar = document.getElementById('sidebar');
+        sidebar.style.display = ['meus-dados', 'progresso', 'trilha', 'certificados'].includes(id) ? 'block' : 'none';
     }
 
-    function solicitarCertificado() {
-        // Lógica de validação que checa nota >= 6 e pagamento via App Script
-        alert("Validando requisitos para emissão...");
+    function validarLogin() {
+        // Aqui você chamará seu script de validação
+        alert("Autenticando...");
+        showPage('trilha');
     }
 </script>
 </body>
