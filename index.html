@@ -27,15 +27,17 @@
         </select>
         
         <form id="form-aluno">
+            <!-- Chave e CPF fixos e obrigatórios para ambas as opções -->
             <label for="chave">Chave de Acesso</label>
             <input type="text" name="chave" id="chave" placeholder="Ex: ONL-ADM-0001" required>
+
+            <label for="cpf">CPF</label>
+            <input type="text" name="cpf" id="cpf" placeholder="Somente números" required>
             
+            <!-- Caixa que desaparece no Login e aparece no Cadastro -->
             <div id="div-cadastro">
                 <label for="nome">Nome Completo</label>
                 <input type="text" name="nome" id="nome" placeholder="Seu nome completo">
-                
-                <label for="cpf">CPF</label>
-                <input type="text" name="cpf" id="cpf" placeholder="Somente números">
                 
                 <label for="nasc">Data de Nascimento</label>
                 <input type="text" name="nasc" id="nasc" placeholder="DD/MM/AAAA">
@@ -59,6 +61,7 @@
         function toggleForm() {
             const acao = document.getElementById('acao').value;
             const divCadastro = document.getElementById('div-cadastro');
+            // Seleciona apenas os campos que estão DENTRO da caixa de cadastro
             const campos = divCadastro.querySelectorAll('input');
             
             if (acao === 'login') {
@@ -70,7 +73,7 @@
             }
         }
 
-        // Configuração inicial dos campos obrigatórios
+        // Executa a função ao carregar a página
         toggleForm();
 
         document.getElementById('form-aluno').addEventListener('submit', function(e) {
@@ -79,7 +82,7 @@
             btn.disabled = true;
             btn.innerText = "Processando...";
 
-            // Link do Google Apps Script para envio dos dados
+            // Link oficial do Google Apps Script
             const url = "https://script.google.com/macros/s/AKfycbzcYGIRb2c4rBhj4qspCP7unqseKr2SLlRX5rvg39jUUjMBj_UIXJpB3Hrq11Hobjmx/exec";
             
             const formData = new FormData(this);
