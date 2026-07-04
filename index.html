@@ -70,7 +70,7 @@
             }
         }
 
-        // Executa no início para ajustar os campos obrigatórios
+        // Configuração inicial dos campos obrigatórios
         toggleForm();
 
         document.getElementById('form-aluno').addEventListener('submit', function(e) {
@@ -79,7 +79,7 @@
             btn.disabled = true;
             btn.innerText = "Processando...";
 
-            // Sua URL oficial e definitiva do App da Web
+            // Link do Google Apps Script para envio dos dados
             const url = "https://script.google.com/macros/s/AKfycbzcYGIRb2c4rBhj4qspCP7unqseKr2SLlRX5rvg39jUUjMBj_UIXJpB3Hrq11Hobjmx/exec";
             
             const formData = new FormData(this);
@@ -96,7 +96,6 @@
                     location.reload();
                 } else if (data === "SUCESSO_LOGIN") {
                     alert("Login autorizado! Bem-vindo ao curso.");
-                    // Aqui depois colocaremos o redirecionamento para a página das aulas
                 } else if (data === "ERRO_EXPIRADO") {
                     alert("Atenção: Seu prazo de acesso de 90 dias expirou.");
                 } else if (data === "ERRO_LOGIN") {
