@@ -5,18 +5,21 @@
     <title>CCP Cursos - Portal do Aluno</title>
     <style>
         :root { --primary: #004a99; }
-        body { font-family: sans-serif; margin: 0; background: #f4f4f9; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f4f4f9; }
         nav { background: var(--primary); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .page { display: none; padding: 20px; } .active { display: block; }
-        .video-container { width: 320px; height: 180px; cursor: pointer; transition: 0.3s; background: #000; }
+        .sidebar { width: 220px; background: #333; color: white; height: 100vh; position: fixed; display: none; padding: 20px; }
+        .main-content { margin-left: 260px; padding: 40px; }
+        .page { display: none; } .active { display: block; }
+        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .video-container { width: 320px; height: 180px; cursor: pointer; transition: 0.3s; background: #000; overflow: hidden; }
         .video-container.expandido { width: 100%; height: 400px; }
-        .sidebar { width: 200px; background: #333; color: white; height: 100vh; position: fixed; display: none; padding: 20px; }
+        .btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <nav>
-    <img src="URL_DA_LOGO" style="width:100px;">
+    <img src="https://i.imgur.com/YOUR_LOGO_LINK.png" style="width:100px;">
     <div>
         <button onclick="showPage('vitrine')">Cursos</button>
         <button onclick="showPage('acesso')">Área do Aluno</button>
@@ -24,31 +27,42 @@
 </nav>
 
 <div id="sidebar" class="sidebar">
-    <button onclick="showPage('trilha')">Trilha</button><br>
-    <button onclick="showPage('meus-dados')">Meus Dados</button>
+    <h3>Painel Aluno</h3>
+    <button onclick="showPage('trilha')">Trilha Almoxarifado</button>
 </div>
 
-<main style="margin-left: 220px;">
-    <div id="acesso" class="page active">
-        <h2>Já sou aluno</h2>
+<main id="main" class="main-content">
+    <div id="vitrine" class="page active">
+        <h1>Nossos Cursos</h1>
+        <div class="card">
+            <h3>Almoxarifado</h3>
+            <button class="btn" onclick="showPage('acesso')">Acessar Curso</button>
+        </div>
+    </div>
+
+    <div id="acesso" class="page">
+        <h2>Entrar no Sistema</h2>
         <input id="login-chave" placeholder="Chave"><input id="login-cpf" placeholder="CPF">
-        <button onclick="enviarAcao('login')">Entrar</button>
-        
-        <h2>Primeiro Acesso</h2>
-        <input id="cad-nome" placeholder="Nome"><input id="cad-chave" placeholder="Chave"><input id="cad-cpf" placeholder="CPF">
-        <button onclick="enviarAcao('cadastro')">Cadastrar</button>
+        <button class="btn" onclick="enviarAcao('login')">Entrar</button>
     </div>
 
     <div id="trilha" class="page">
-        <h1>Almoxarifado</h1>
-        <div class="video-container" onclick="this.classList.add('expandido')"></div>
-        <p>Exercício 01: <span id="status-ex1">⚪</span> <button onclick="window.open('LINK_FORMS')">Responder</button></p>
-        <button onclick="alert('Verificando status de pagamento...')">SOLICITAR CERTIFICADO</button>
+        <h1>Trilha: Almoxarifado</h1>
+        
+        <div class="card">
+            <h4>Aula 01: Introdução</h4>
+            <div class="video-container" onclick="this.classList.add('expandido')">
+                <iframe src="https://www.youtube.com/embed/VID_ID_1" width="100%" height="100%"></iframe>
+            </div>
+            <p>Exercício 01: <button class="btn" onclick="window.open('LINK_FORMS_1')">Responder</button></p>
+        </div>
+
+        <button class="btn" onclick="alert('Verificando pagamentos e notas...')">SOLICITAR CERTIFICADO</button>
     </div>
 </main>
 
 <script>
-    const URL_SCRIPT = "COLE_AQUI_A_URL_DO_SEU_WEB_APP";
+    const URL_SCRIPT = "SUA_URL_DO_APP_SCRIPT_JA_CONFIGURADA";
 
     function showPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -57,14 +71,12 @@
     }
 
     function enviarAcao(acao) {
-        let params = {acao: acao};
-        if(acao === 'login') { params.chave = document.getElementById('login-chave').value; params.cpf = document.getElementById('login-cpf').value; }
-        
+        let params = {acao: acao, chave: document.getElementById('login-chave').value, cpf: document.getElementById('login-cpf').value};
         fetch(URL_SCRIPT, { method: 'POST', body: new URLSearchParams(params) })
         .then(res => res.text())
         .then(data => {
             if(data.includes("SUCESSO")) showPage('trilha');
-            else alert("Erro: " + data);
+            else alert("Erro: Verifique seus dados.");
         });
     }
 </script>
