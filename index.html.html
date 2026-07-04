@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CECP Cursos - Portal do Aluno</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f6f9; padding: 20px; text-align: center; color: #333; }
+        .container { background: white; padding: 30px; border-radius: 12px; max-width: 420px; margin: 40px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        h2 { color: #0056b3; margin-bottom: 20px; }
+        label { display: block; text-align: left; margin: 10px 0 5px; font-weight: bold; font-size: 14px; }
+        input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
+        button { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+        button:hover { background: #0056b3; }
+        .footer-text { margin-top: 15px; font-size: 13px; color: #666; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>CECP Cursos</h2>
+        
+        <label for="acao">O que deseja fazer?</label>
+        <select id="acao" onchange="toggleForm()">
+            <option value="cadastro">Sou Novo Aluno (Primeiro Acesso)</option>
+            <option value="login">Já sou aluno (Entrar no Curso)</option>
+        </select>
+        
+        <form id="form-aluno">
+            <label for="chave">Chave de Acesso</label>
+            <input type="text" name="chave" id="chave" placeholder="Ex: ONL-ADM-0001" required>
+            
+            <div id="div-cadastro">
+                <label for="nome">Nome Completo</label>
+                <input type="text" name="nome" id="nome" placeholder="Seu nome completo">
+                
+                <label for="cpf">CPF</label>
+                <input type="text" name="cpf" id="cpf" placeholder="Somente números">
+                
+                <label for="nasc">Data de Nascimento</label>
+                <input type="text" name="nasc" id="nasc" placeholder="DD/MM/AAAA">
+                
+                <label for="email">E-mail</label>
+                <input type="email" name="email" id="email" placeholder="seuemail@provedor.com">
+                
+                <label for="zap">WhatsApp</label>
+                <input type="text" name="zap" id="zap" placeholder="(00) 00000-0000">
+                
+                <label for="cidade">Cidade</label>
+                <input type="text" name="cidade" id="cidade" placeholder="Sua cidade">
+            </div>
+            
+            <button type="submit" id="btn-enviar">Prosseguir</button>
+        </form>
+        <p class="footer-text">Capacitação Profissional de Qualidade</p>
+    </div>
+
+    <script>
+        function toggleForm() {
+            const acao = document.getElementById('acao').value;
+            const divCadastro = document.getElementById('div-cadastro');
+            const campos = divCadastro.querySelectorAll('input');
+            
+            if (acao === 'login') {
+                divCadastro.style.display = 'none';
+                campos.forEach(campo => campo.removeAttribute('required'));
+            } else {
+                divCadastro.style.display = 'block';
+                campos.forEach(campo => campo.setAttribute('required', 'true'));
+            }
+        }
+
+        // Executa no início para ajustar os campos obrigatórios
+        toggleForm();
+
+        document.getElementById('form-aluno').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-enviar');
+            btn.disabled = true;
+            btn.innerText = "Processando...";
+
+            // Sua URL oficial e definitiva do App da Web
+            const url = "https://script.google.com/macros/s/AKfycbzcYGIRb2c4rBhj4qspCP7unqseKr2SLlRX5rvg39jUUjMBj_UIXJpB3Hrq11Hobjmx/exec";
+            
+            const formData = new FormData(this);
+            formData.append('acao', document.getElementById('acao').value);
+            
+            fetch(url, { method: 'POST', body: formData })
+            .then(res => res.text())
+            .then(data => {
+                btn.disabled = false;
+                btn.innerText = "Prosseguir";
+                
+                if (data === "SUCESSO_CADASTRO") {
+                    alert("Cadastro realizado com sucesso! Agora mude a opção para 'Já sou aluno' para acessar.");
+                    location.reload();
+                } else if (data === "SUCESSO_LOGIN") {
+                    alert("Login autorizado! Bem-vindo ao curso.");
+                    // Aqui depois colocaremos o redirecionamento para a página das aulas
+                } else if (data === "ERRO_EXPIRADO") {
+                    alert("Atenção: Seu prazo de acesso de 90 dias expirou.");
+                } else if (data === "ERRO_LOGIN") {
+                    alert("Dados incorretos. Verifique a Chave e o CPF digitados.");
+                } else if (data === "ERRO_CHAVE") {
+                    alert("Chave inválida ou já utilizada por outro usuário.");
+                } else {
+                    alert("Resposta do sistema: " + data);
+                }
+            })
+            .catch(err => {
+                btn.disabled = false;
+                btn.innerText = "Prosseguir";
+                alert("Erro de conexão com o servidor: " + err);
+            });
+        });
+    </script>
+</body>
+</html>
